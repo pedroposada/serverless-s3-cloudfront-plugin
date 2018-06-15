@@ -97,7 +97,7 @@ class ServerlessPlugin {
       const [ { Id:DistId } ] = Items.filter(({ 
         Origins: { Items: [ { DomainName } = {} ] = [] } = {}
       }) =>
-        DomainName === `${s3Bucket}.s3.amazonaws.com`;
+        DomainName === `${s3Bucket}.s3.amazonaws.com`
       )
       this.serverless.cli.log(DistId);
       args = [
