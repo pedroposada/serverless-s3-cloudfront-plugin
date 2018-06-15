@@ -10,6 +10,9 @@ yarn add https://github.com/pedroposada/serverless-s3-cloudfront-plugin.git
 And in your serverless.yml add the following values to the custom block
 ```yml
 # serverless.yml
+plugins:
+  - serverless-s3-cloudfront-plugin
+
 custom:
   s3Bucket: my-bucket   # required, the name of your bucket. It will be created if it doesnt exist already
   distFolder: build     # required, name of folder where your local static files are
