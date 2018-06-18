@@ -1,6 +1,5 @@
 # serverless-s3-cloudfront-plugin
-Plugin for serverless framework to create an S3 bucket and a CloudFront distribution in AWS
-
+Plugin for serverless framework to manage an S3 bucket and a CloudFront distribution in AWS
 
 ## Installation
 In your terminal type
