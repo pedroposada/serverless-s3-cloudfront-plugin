@@ -2,9 +2,9 @@
 Plugin for serverless framework to manage an S3 bucket and a CloudFront distribution in AWS
 
 ## Installation
-In your terminal type
+In the terminal ("-D" is for dev dependency)
 ```bash
-yarn add https://github.com/pedroposada/serverless-s3-cloudfront-plugin.git
+yarn add -D https://github.com/pedroposada/serverless-s3-cloudfront-plugin.git
 ```
 And in your serverless.yml add the following values to the custom block
 ```yml
