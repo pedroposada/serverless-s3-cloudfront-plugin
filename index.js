@@ -79,7 +79,7 @@ class ServerlessPlugin {
         const output = outputs.find(entry => entry.OutputKey === 'WebsiteDistribution')
         this.serverless.cli.log(`Results for Outputs.WebsiteDistribution: ${output}`)
         if (output && output.OutputValue) {
-          this.serverless.cli.log(`Web App Domain: https://${output.OutputValue}`)
+          this.serverless.cli.log(`Web App Domain: ${output.OutputValue}`)
         } else {
           this.serverless.cli.log('Web App Domain: Not Found')
         }
