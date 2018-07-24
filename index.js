@@ -71,6 +71,10 @@ class ServerlessPlugin {
       this.options.region // eslint-disable-line comma-dangle
     )
     .then((result) => {
+      if (!result.Stacks || !result.Stacks[0].Outputs) {
+        this.serverless.cli.log('Web App Domain: Not Found');
+        return
+      }
       const outputs = result.Stacks[0].Outputs;
       const output = outputs.find(entry => entry.OutputKey === 'WebAppCloudFrontDistributionOutput');
       if (output.OutputValue) {
