@@ -77,7 +77,7 @@ class ServerlessPlugin {
       }
       const outputs = result.Stacks[0].Outputs;
       const output = outputs.find(entry => entry.OutputKey === 'WebAppCloudFrontDistributionOutput');
-      if (output.OutputValue) {
+      if (output && output.OutputValue) {
         this.serverless.cli.log(`Web App Domain: https://${output.OutputValue}`);
       } else {
         this.serverless.cli.log('Web App Domain: Not Found');
