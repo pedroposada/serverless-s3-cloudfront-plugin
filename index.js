@@ -68,7 +68,7 @@ class ServerlessPlugin {
         'describeStacks',
         { StackName: stackName },
         this.options.stage,
-        this.options.region // eslint-disable-line comma-dangle
+        this.options.region
       )
       .then((result) => {
         if (!result.Stacks || !result.Stacks[0].Outputs) {
