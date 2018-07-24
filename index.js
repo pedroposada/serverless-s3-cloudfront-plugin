@@ -94,12 +94,18 @@ class ServerlessPlugin {
     let sterr = result.stderr.toString();
     if (stdout) {
       const { DistributionList: { Items = [] } = {} } = JSON.parse(stdout) || {};
-      const [ { Id:DistId } ] = Items.filter(({ 
+      const [ { Id:DistId } = {} ] = Items.filter(({ 
         Origins: { Items: [ { DomainName } = {} ] = [] } = {}
       }) =>
         DomainName === `${s3Bucket}.s3.amazonaws.com`
       )
-      this.serverless.cli.log(DistId);
+      
+      if (!DistId) {
+        this.serverless.cli.log(`DistId not found!`);
+        return
+      }
+      
+      this.serverless.cli.log(`DistId: ${DistId}`);
       args = [
         'cloudfront',
         'create-invalidation',
