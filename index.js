@@ -76,7 +76,8 @@ class ServerlessPlugin {
           return
         }
         const outputs = result.Stacks[0].Outputs
-        const output = outputs.find(entry => entry.OutputKey === 'WebAppCloudFrontDistributionOutput')
+        const output = outputs.find(entry => entry.OutputKey === 'WebsiteDistribution')
+        this.serverless.cli.log(`Results for Outputs.WebsiteDistribution: ${output}`)
         if (output && output.OutputValue) {
           this.serverless.cli.log(`Web App Domain: https://${output.OutputValue}`)
         } else {
