@@ -106,6 +106,6 @@ resources:
 
   ## In order to print out the hosted domain via `serverless info -v` we need to define the DomainName output for CloudFormation
   Outputs:
-    WebAppCloudFrontDistributionOutput:
+    WebsiteDistribution:
       Value:
-        'Fn::GetAtt': [ WebAppCloudFrontDistribution, DomainName ]
+        'Fn::GetAtt': [ WebsiteDistribution, DomainName ]
