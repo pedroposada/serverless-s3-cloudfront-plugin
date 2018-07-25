@@ -20,17 +20,17 @@ custom:
 
 
 ## Available commands
-// pirnt out the cloudfront domain for your bucket
+// prints out the cloudfront domain for your bucket
 ```bash
 serverless domainInfo
 ```
 
-// updalod files from your "distFolder" to your bucket. Will not delete any files, just update
+// uploads files from your "distFolder" to your bucket. Will not delete any files, just update
 ```bash
 serverless syncToS3
 ```
 
-// create new cach invalidation to refresh content in cloudfront
+// creates new cache invalidation to refresh content in cloudfront
 ```bash
 serverless invalidateCache
 ```
