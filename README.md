@@ -20,8 +20,6 @@ custom:
 
 
 ## Available commands
-In your terminal type
-
 // pirnt out the cloudfront domain for your bucket
 ```bash
 serverless domainInfo
