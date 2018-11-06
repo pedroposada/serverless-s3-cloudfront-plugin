@@ -70,10 +70,9 @@ class ServerlessPlugin {
     const distFolder = this.serverless.variables.service.custom.distFolder || 'build'
     const args = [
       's3',
-      'cp',
+      'sync',
       `${distFolder}`,
-      `s3://${s3Bucket}/`,
-      '--recursive'
+      `s3://${s3Bucket}/`
     ]
     const result = spawnSync('aws', args)
     const stdout = result.stdout.toString()
