@@ -7,6 +7,12 @@ class ServerlessPlugin {
     this.serverless = serverless
     this.options = options
     this.commands = {
+      wipeS3: {
+        usage: 'Empties S3 bucket',
+        lifecycleEvents: [
+          'wipe'
+        ]
+      },
       syncToS3: {
         usage: 'Deploys the `app` directory to your bucket',
         lifecycleEvents: [
@@ -28,12 +34,36 @@ class ServerlessPlugin {
     }
 
     this.hooks = {
+      'wipeS3:wipe': this.wipeDirectory.bind(this),
       'syncToS3:sync': this.syncDirectory.bind(this),
       'domainInfo:domainInfo': this.domainInfo.bind(this),
       'invalidateCache:invalidate': this.invalidateCache.bind(this)
     }
   }
 
+  // delete all contents of the S3 bucket
+  wipeDirectory () {
+    const s3Bucket = this.serverless.variables.service.custom.s3Bucket
+    const args = [
+      's3',
+      'rm',
+      `s3://${s3Bucket}/`,
+      '--recursive'
+    ]
+    const result = spawnSync('aws', args)
+    const stdout = result.stdout.toString()
+    const sterr = result.stderr.toString()
+    if (stdout) {
+      this.serverless.cli.log(stdout)
+    }
+    if (sterr) {
+      this.serverless.cli.log(sterr)
+    }
+    if (!sterr) {
+      this.serverless.cli.log('Successfully wiped S3 bucket clean')
+    }
+  }
+  
   // syncs the `app` directory to the provided bucket
   syncDirectory () {
     const s3Bucket = this.serverless.variables.service.custom.s3Bucket
@@ -78,7 +108,7 @@ class ServerlessPlugin {
         }
         const outputs = result.Stacks[0].Outputs
         const output = outputs.find(entry => entry.OutputKey === 'WebsiteDistribution')
-        this.serverless.cli.log(`Results for Outputs.WebsiteDistribution: ${output}`)
+        this.serverless.cli.log(`Results for Outputs.WebsiteDistribution: ${JSON.stringify(output)}`)
         if (output && output.OutputValue) {
           this.serverless.cli.log(`Web App Domain: ${output.OutputValue}`)
         } else {
