@@ -64,7 +64,7 @@ class ServerlessPlugin {
     }
   }
   
-  // syncs the `app` directory to the provided bucket
+  // syncs the `app` directory to the provided bucket, uses --delete flag
   syncDirectory () {
     const s3Bucket = this.serverless.variables.service.custom.s3Bucket
     const distFolder = this.serverless.variables.service.custom.distFolder || 'build'
@@ -72,7 +72,8 @@ class ServerlessPlugin {
       's3',
       'sync',
       `${distFolder}`,
-      `s3://${s3Bucket}/`
+      `s3://${s3Bucket}/`,
+      '--delete'
     ]
     const result = spawnSync('aws', args)
     const stdout = result.stdout.toString()
