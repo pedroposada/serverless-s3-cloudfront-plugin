@@ -103,7 +103,9 @@ class ServerlessPlugin {
       )
       .then((result) => {
         if (!result.Stacks || !result.Stacks[0].Outputs) {
-          this.serverless.cli.log('Stacks not found', result)
+          this.serverless.cli.log('Stacks: Not Found')
+          
+          this.serverless.cli.log(result)
           
           return
         }
@@ -112,7 +114,13 @@ class ServerlessPlugin {
         const output = outputs
           .find(entry => ['WebsiteDistribution', 'WebAppCloudFrontDistribution'].includes(entry.OutputKey))
         
-        this.serverless.cli.log(`Results: ${JSON.stringify(output)}`, result)
+        if (!output) {
+          this.serverless.cli.log('Distribution: Not Found')
+          
+          this.serverless.cli.log(result)
+
+          return 
+        }
       
         if (output && output.OutputValue) {
           this.serverless.cli.log(`Web App Domain: ${output.OutputValue}`)
