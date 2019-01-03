@@ -103,7 +103,8 @@ class ServerlessPlugin {
       )
       .then((result) => {
         if (!result.Stacks || !result.Stacks[0].Outputs) {
-          this.serverless.cli.log('Web App Domain: Not Found')
+          this.serverless.cli.log('Stacks not found', result)
+          
           return
         }
         const outputs = result.Stacks[0].Outputs
