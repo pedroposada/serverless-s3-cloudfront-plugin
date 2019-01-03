@@ -14,7 +14,7 @@ class ServerlessPlugin {
         ]
       },
       syncToS3: {
-        usage: 'Deploys the `app` directory to your bucket',
+        usage: 'Deploys the `distFolder` directory to your bucket',
         lifecycleEvents: [
           'sync'
         ]
@@ -102,19 +102,17 @@ class ServerlessPlugin {
         this.options.region
       )
       .then((result) => {
-        if (!result.Stacks || !result.Stacks[0].Outputs) {
+        if (!result) {
           this.serverless.cli.log('Stacks: Not Found')
           
           this.serverless.cli.log(JSON.stringify(result))
           
           return
         }
-        const outputs = result.Stacks[0].Outputs
+      
+        const outputs = result.Stacks && result.Stacks[0] && result.Stacks[0].Outputs
         
-        const output = outputs
-          .find(entry => ['WebsiteDistribution', 'WebAppCloudFrontDistribution'].includes(entry.OutputKey))
-        
-        if (!output) {
+        if (!outputs) {
           this.serverless.cli.log('Distribution: Not Found')
           
           this.serverless.cli.log(JSON.stringify(outputs))
@@ -122,15 +120,9 @@ class ServerlessPlugin {
           return 
         }
       
-        if (!output.OutputValue) {
-          this.serverless.cli.log('Web App Domain: Not Found')
-          
-          this.serverless.cli.log(JSON.stringify(output))
-
-          return 
-        }
-      
-        this.serverless.cli.log(`Web App Domain: ${output.OutputValue}`)
+        outputs.forEach(output => {
+          this.serverless.cli.log(`${output.OutputKey}: ${output.OutputValue}`)
+        })
       })
   }
 
